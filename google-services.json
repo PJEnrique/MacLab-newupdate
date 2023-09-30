@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1466418591",
+    "project_id": "maclab-auth-399711",
+    "storage_bucket": "maclab-auth-399711.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1466418591:android:aef9dc08e93530e4a3e9aa",
+        "android_client_info": {
+          "package_name": "com.GeekCoder.Maclab.io"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1466418591-l83mrmj4motvrij4lvdkrlai13aejicp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.GeekCoder.Maclab.io",
+            "certificate_hash": "d9452e90714e71cbcfb263e59bdbfdf6d5d6a480"
+          }
+        },
+        {
+          "client_id": "1466418591-p9jn67sp9s39hqjgu06adnfach9c7hoi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.GeekCoder.Maclab.io",
+            "certificate_hash": "ac4149e34f54e5e363c21a1620a86750011db09e"
+          }
+        },
+        {
+          "client_id": "1466418591-v1cav77i857j8nvg0b0p1a7f4csfsglf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbKG33qVHp6QgmSQfOPgPXeK36oqv1GZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1466418591-v1cav77i857j8nvg0b0p1a7f4csfsglf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
