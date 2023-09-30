@@ -8,6 +8,8 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import useAuth from '../hooks/useAuth';
 import ForgotPassword from '../screens/ForgotPassword';
+import AboutUs from '../screens/AboutUs';
+import Guidelines from '../screens/Guidelines';
 import { HistoryScreen, MACScreen, ProfileScreen, SettingsScreen } from "../screens/BottomTabNav";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Entypo, AntDesign, MaterialIcons, FontAwesome } from '@expo/vector-icons';
@@ -111,6 +113,8 @@ export default function AppNavigation() {
         <Stack.Screen name="Login" options={{headerShown: false}} component={LoginScreen} />
         <Stack.Screen name="SignUp" options={{headerShown: false}} component={SignUpScreen}/>
         <Stack.Screen name="ForgotPassword" options={{headerShown: false}} component={ForgotPassword} />
+        <Stack.Screen name="AboutUs" options={{headerShown: false}} component={AboutUs} />
+        <Stack.Screen name="Guidelines" options={{headerShown: false}} component={Guidelines} />
       </Stack.Navigator>
     </NavigationContainer>
   )
