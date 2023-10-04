@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Input, Button, Text } from 'react-native-elements';
-import 'firebase/auth';
-import { initializeApp } from "firebase/app";
+import { sendPasswordResetEmail } from 'firebase/auth';  
+import { getAuth } from 'firebase/auth';  
+
 const ForgotPassword = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [resetSent, setResetSent] = useState(false);
-  
 
   const handleResetPassword = async () => {
+    const authInstance = getAuth();  
     try {
-      await initializeApp.auth().sendPasswordResetEmail(email);
+      await sendPasswordResetEmail(authInstance, email); 
       setResetSent(true);
     } catch (error) {
       console.error('Error sending password reset email:', error.message);
@@ -18,7 +19,6 @@ const ForgotPassword = ({ navigation }) => {
   };
 
   return (
-    
     <View style={styles.container}>
       <Text h4 style={styles.header}>Forgot Password</Text>
       {!resetSent ? (
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 20,
+
   },
 });
 
