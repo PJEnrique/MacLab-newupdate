@@ -64,6 +64,7 @@ const Guidelines = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 50,
+    backgroundColor: '#101820FF'
   },
   guidelineContainer: {
     marginBottom: 20,
@@ -72,10 +73,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#e67e22'
   },
   guidelineText: {
     fontSize: 16,
     marginBottom: 5,
+    color: 'white'
   },
 });
 

@@ -11,7 +11,8 @@ import ForgotPassword from '../screens/ForgotPassword';
 import AboutUs from '../screens/AboutUs';
 import Guidelines from '../screens/Guidelines';
 import SettingsScreen from '../screens/SettingsScreen';
-import { HistoryScreen, MACScreen, ProfileScreen } from '../screens/BottomTabNav';
+import ProfileScreen from '../screens/ProfileScreen';
+import { HistoryScreen, MACScreen } from '../screens/BottomTabNav';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Entypo, AntDesign, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 
@@ -40,7 +41,7 @@ const ProfileStack = createNativeStackNavigator();
 const ProfileStackScreen = () => (
   <ProfileStack.Navigator>
     <ProfileStack.Screen
-      name="SettingsScreen"
+      name="Profile"
       component={ProfileScreen}
       options={({ navigation }) => ({
         title: 'Profile',
@@ -108,7 +109,7 @@ export default function AppNavigation() {
             }}
           />
           <Tab.Screen
-            name="Profile"
+            name="ProfileScreen"
             component={ProfileStackScreen}
             options={{
               tabBarIcon: ({ focused }) => {

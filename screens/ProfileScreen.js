@@ -166,6 +166,7 @@ const ProfileScreen = () => {
           onChangeText={setDisplayName}
           placeholder="Enter display name"
           editable={isEditing}
+          inputStyle={{ color: 'white' }}
         />
 
         <Input
@@ -175,6 +176,7 @@ const ProfileScreen = () => {
           placeholder="Enter student number"
           editable={isEditing}
           keyboardType="numeric"
+          inputStyle={{ color: 'white' }}
         />
 
         <TouchableOpacity onPress={() => isEditing && setYearGradeModalVisible(true)}>
@@ -252,6 +254,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+    backgroundColor: '#101820FF'
   },
   avatarContainer: {
     marginBottom: 20,
@@ -267,9 +270,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   pickerButton: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#ffa500',
     padding: 10,
     borderRadius: 5,
+    marginTop: 5,
+    width: '100%',
   },
   centeredView: {
     flex: 1,

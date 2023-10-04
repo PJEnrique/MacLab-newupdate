@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-end',
+    backgroundColor: '#101820FF'
   },
   buttonContainer: {
     position: 'absolute',

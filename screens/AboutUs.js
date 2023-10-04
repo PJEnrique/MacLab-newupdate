@@ -35,19 +35,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#101820FF'
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#e67e22'
   },
   introText: {
     marginBottom: 20,
+    color: 'white'
   },
   developerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#e67e22'
   },
   developerContainer: {
     flexDirection: 'row',
@@ -66,9 +70,11 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#e67e22'
   },
   role: {
     fontSize: 15,
+    color: 'white'
   },
 });
 
