@@ -21,22 +21,40 @@ const MACScreen = () => {
     };
   }, []);
 
-  const toggleStatus = (index) => {
-    setDesktopMacIcons((prevIcons) =>
-      prevIcons.map((icon) =>
-        icon.index === index
-          ? { ...icon, active: !icon.active, timer: icon.active ? 7200 : 7200 } // Reset timer when deactivating
-          : icon
-      )
-    );
-  };
-
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
     return `${hours}:${minutes}:${remainingSeconds}`;
   };
+
+  const toggleStatus = async (index) => {
+  try {
+    const updatedIcons = desktopMacIcons.map((icon) =>
+      icon.index === index
+        ? { ...icon, active: !icon.active, timer: icon.active ? 7200 : 7200 }
+        : icon
+    );
+
+    setDesktopMacIcons(updatedIcons);
+
+    if (!desktopMacIcons[index - 1].active) {
+      // If the timer is starting, fetch data
+      const response = await fetch('http://136.158.121.80:3400/MAC');
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      const data = await response.json();
+      setDesktopMacIcons(data);
+    } else {
+      // If the timer is force-stopped, save the time
+      console.log(`Desktop ${index} timer stopped at: ${formatTime(desktopMacIcons[index - 1].timer)}`);
+    }
+  } catch (error) {
+    console.error('Error fetching MAC data or saving time:', error.message);
+    console.error('Error details:', error); // Log the full error object for debugging
+  }
+};
 
   return (
     <View style={styles.container}>

@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { themeColors } from '../theme'
+import { themeColors } from '../theme/ThemeColors'
 import { useNavigation } from '@react-navigation/native'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../config/firebase'
