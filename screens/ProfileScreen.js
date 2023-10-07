@@ -158,7 +158,7 @@ const ProfileScreen = () => {
           )}
         </Avatar>
       </View>
-
+           
       <View style={styles.inputContainer}>
         <Input
           label="Display Name"

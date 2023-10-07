@@ -1,62 +1,177 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
-import { auth } from '../config/firebase'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
+import { STORAGE_KEY } from '../storage';
+import axios from 'axios'; 
 
-export default function HomeScreen() {
-
- const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
+const TypewriterText = ({ text }) => {
+  const [displayText, setDisplayText] = useState('');
+  const [charIndex, setCharIndex] = useState(0);
 
   useEffect(() => {
-    (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
+    const intervalId = setInterval(() => {
+      if (charIndex < text.length) {
+        setDisplayText((prevDisplayText) => prevDisplayText + text[charIndex]);
+        setCharIndex((prevCharIndex) => prevCharIndex + 1);
+      } else {
+        clearInterval(intervalId);
+      }
+    }, 100); // Adjust the delay between characters here (in milliseconds)
+    return () => clearInterval(intervalId);
+  }, [charIndex, text]);
 
-  const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-  };
+  return <Text style={styles.title}>{displayText}</Text>;
+};
 
-  if (hasPermission === null) {
-    return <Text>Requesting camera permission...</Text>;
+const HomeScreen = () => {
+  const [fullname, setFullname] = useState('');
+  const [studentNumber, setStudentNumber] = useState('');
+  const [yearLevel, setYearLevel] = useState('');
+  const [major, setMajor] = useState('');
+  const [entryTime, setEntryTime] = useState(new Date().toLocaleString());
+
+  const navigation = useNavigation();
+
+  const handleFormSubmit = async () => {
+  try {
+    const formData = { fullname, studentNumber, yearLevel, major, entryTime };
+    console.log('Form data submitted:', formData);
+
+    // Send a POST request to your server with the form data
+    const response = await axios.post('http://192.168.100.14:3600/attendance/post1', formData);
+    console.log('Response from server:', response.data);
+
+    // Load existing submission data from AsyncStorage
+    const storedData = await AsyncStorage.getItem(STORAGE_KEY);
+    const existingData = storedData ? JSON.parse(storedData) : [];
+
+    // Update submission data with new form data
+    const updatedData = [...existingData, { id: new Date().toISOString(), formData }];
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedData));
+
+    navigation.navigate('History');
+    // Reset the input fields after successful submission
+    setFullname('');
+    setStudentNumber('');
+    setYearLevel('');
+    setMajor('');
+    setEntryTime(new Date().toLocaleString()); // Update entryTime for the next submission
+  } catch (error) {
+    console.error('Error submitting form:', error);
   }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+};
 
   return (
     <View style={styles.container}>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
-      {!scanned && (
-        <View style={styles.buttonContainer}>
-          <Button
-            title={'Tap to Scan'}
-            onPress={() => setScanned(false)}
-            color="#ffa500"
+      <TypewriterText text="ATTENDANCE" />
+      <View style={styles.formContainer}>
+        <View style={styles.fieldContainer}>
+          <Text style={[styles.label, { color: 'white' }]}>Fullname:</Text>
+          <TextInput
+            style={[styles.input, { color: 'white' }]}
+            value={fullname}
+            onChangeText={(text) => setFullname(text)}
+            placeholder="Enter your fullname"
+            placeholderTextColor="#d3d3d3" 
           />
         </View>
-      )}
+
+        <View style={styles.fieldContainer}>
+          <Text style={[styles.label, { color: 'white' }]}>Student Number:</Text>
+          <TextInput
+            style={[styles.input, { color: 'white' }]}
+            value={studentNumber}
+            onChangeText={(text) => setStudentNumber(text)}
+            placeholder="Enter your student number"
+            placeholderTextColor="#d3d3d3" 
+          />
+        </View>
+
+        <View style={styles.fieldContainer}>
+          <Text style={[styles.label, { color: 'white' }]}>Year Level:</Text>
+          <Picker
+            selectedValue={yearLevel}
+            onValueChange={(itemValue) => setYearLevel(itemValue)}
+            style={[styles.input, { color: 'white' }]}
+            itemStyle={{ color: 'white' }}
+          >
+            <Picker.Item label="Select Year Level" value="" />
+            <Picker.Item label="1st year" value="1st year" />
+            <Picker.Item label="2nd year" value="2nd year" />
+            <Picker.Item label="3rd year" value="3rd year" />
+            <Picker.Item label="4th year" value="4th year" />
+          </Picker>
+        </View>
+
+        <View style={styles.fieldContainer}>
+          <Text style={[styles.label, { color: 'white' }]}>Major:</Text>
+          <Picker
+            selectedValue={major}
+            onValueChange={(itemValue) => setMajor(itemValue)}
+            style={[styles.input, { color: 'white' }]}
+            itemStyle={{ color: 'white' }}
+          >
+            <Picker.Item label="Select Major" value="" />
+            <Picker.Item label="WebDev" value="WebDev" />
+            <Picker.Item label="SystemDev" value="SystemDev" />
+            <Picker.Item label="Animation" value="Animation" />
+          </Picker>
+        </View>
+
+        <TouchableOpacity onPress={handleFormSubmit} style={styles.submitButton}>
+          <Text style={[styles.submitButtonText, { color: 'white' }]}>Submit</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    backgroundColor: '#101820FF'
+    backgroundColor: '#101820FF',
+    justifyContent: 'flex-start', 
+    alignItems: 'center',
+    padding: 20,
   },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 70,
-    alignSelf: 'center',
+  formContainer: {
+    width: '100%',
+    borderColor: 'white',
+    borderWidth: 1,
+    padding: 10,
+    marginTop: 100, 
+  },
+  fieldContainer: {
+    marginBottom: 15,
+  },
+  label: {
+    fontSize: 18,
+    marginBottom: 5,
+  },
+  input: {
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+  },
+  submitButton: {
+    backgroundColor: '#ffa500',
+    padding: 15,
+    alignItems: 'center',
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  submitButtonText: {
+    fontSize: 18,
+  },
+  title: {
+    fontSize: 50,
+    color: 'white',
+    textAlign: 'center',
+    marginBottom: 20,
   },
 });
+
+export default HomeScreen;

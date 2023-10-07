@@ -2,11 +2,15 @@ const express = require('express');
 const IMAC = require('../models/IMAC');
 const router = express.Router();
 // Create a new MAC
-router.post('/MAC/post', async (req, res) => {
+router.post('/post', async (req, res) => {
   try {
-    const MAC = new IMAC(req.body);
-    await MAC.save();
-    res.status(201).json(student);MAC
+    const { id, index, active, timer } = req.body;
+
+    const requestData = { id, index, active, timer };
+    const mac = new IMAC(requestData);
+
+    await mac.save();
+    res.status(201).json(mac);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -21,15 +25,7 @@ router.get('/get', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-// Read one MAC
-router.get('/MAC/getOne/:id', async (req, res) => {
-  try {
-    const MAC = await IMAC.find();
-    res.json(MAC);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+
 
 // Update a MAC
 router.put('/MAC/put/:id', async (req, res) => {

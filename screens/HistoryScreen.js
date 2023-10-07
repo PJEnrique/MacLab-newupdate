@@ -1,12 +1,93 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios'; 
 
-const HistoryScreen = () => {
+const STORAGE_KEY = '@submissionData';
+
+const HistoryScreen = ({ route }) => {
+  const [submissionContainers, setSubmissionContainers] = useState([]);
+  const formData = route.params ? route.params.formData : null;
+
+  const loadSubmissionData = async () => {
+    try {
+      const storedData = await AsyncStorage.getItem(STORAGE_KEY);
+      if (storedData) {
+        setSubmissionContainers(JSON.parse(storedData));
+      }
+    } catch (error) {
+      console.error('Error loading submission data:', error);
+    }
+  };
+
+  useEffect(() => {
+    loadSubmissionData();
+  }, []);
+
+  const updateSubmissionData = useCallback(async () => {
+  if (formData) {
+    const attendanceData = {
+      fullname: formData.fullname,
+      studentNumber: formData.studentNumber,
+      yearLevel: formData.yearLevel,
+      major: formData.major,
+      entryTime: formData.entryTime,
+    };
+
+    try {
+      const response = await axios.post('http://192.168.100.14:3600/attendance/post1', attendanceData);
+      console.log('Response from server:', response.data);
+
+      // Handle the new form submission and update submissionContainers accordingly
+      const updatedSubmissionContainers = [
+        ...submissionContainers,
+        {
+          id: new Date().toISOString(),
+          formData,
+        },
+      ];
+
+      // Save the updated data to AsyncStorage
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSubmissionContainers));
+
+      // Update the submissionContainers state to trigger a refresh
+      setSubmissionContainers(updatedSubmissionContainers);
+    } catch (error) {
+      console.error('Error posting attendance data:', error.response ? error.response.data : error.message);
+    }
+  }
+}, [formData, submissionContainers]);
+
+  useEffect(() => {
+    updateSubmissionData();
+  }, [updateSubmissionData]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.text}>History Page</Text>
+        <Text style={styles.text}>Record of Attendance:</Text>
+        <ScrollView style={styles.scrollView}>
+          {submissionContainers.map((submission) => (
+            <View key={submission.id} style={styles.cardContainer}>
+              {submission.formData ? (
+                <View>
+                  <Text style={styles.cardTitle}>Date and Time: {submission.formData.entryTime}</Text>
+                  {Object.keys(submission.formData)
+                    .filter((key) => key !== 'entryTime')
+                    .map((key) => (
+                      <View key={key} style={styles.card}>
+                        <Text style={styles.cardTitle}>{key}</Text>
+                        <Text style={styles.cardValue}>{submission.formData[key] || 'N/A'}</Text>
+                      </View>
+                    ))}
+                </View>
+              ) : (
+                <Text style={styles.historyText}>No form data available</Text>
+              )}
+            </View>
+          ))}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -15,19 +96,43 @@ const HistoryScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#101820FF'
+    backgroundColor: '#101820FF',
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 20,
   },
   text: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white'
+    color: 'white',
+    marginBottom: 10,
+  },
+  scrollView: {
+    flex: 1,
+    width: '100%',
+  },
+  cardContainer: {
+    backgroundColor: '#17202A',
+    borderRadius: 10,
+    marginBottom: 12,
+    padding: 16,
+  },
+  card: {
+    marginBottom: 8,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 5,
+  },
+  cardValue: {
+    fontSize: 16,
+    color: 'white',
+  },
+  historyText: {
+    color: 'white',
   },
 });
 

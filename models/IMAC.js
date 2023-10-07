@@ -1,28 +1,19 @@
 const mongoose = require('mongoose');
 
 const IMACSchema = new mongoose.Schema({
-  First_Name: {
-     type: String,
+  id: {
+    type: String, // Assuming the ID is a string
     required: true
   },
-  Last_Name: {
-    type: String,
-    required: true
+  active: {
+    type: Boolean,
+    default: true // Adjust the default value if needed
   },
-  Age: {
-    type: String,
-    required: true
+  timer: {
+    type: Number,
+    default: 7200
   },
-  Course: {
-    type: String,
-    required: true
-  },
-  Section: {
-    type: String,
-    required: true
-  },
-  
 });
 
 const IMAC = mongoose.model('IMAC', IMACSchema);
-module.exports = IMAC
+module.exports = IMAC;

@@ -17,6 +17,7 @@ const SettingsScreen = ({ navigation }) => {
     navigation.navigate('Guidelines');
   };
 
+
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#101820FF' }}>
       <TouchableOpacity
@@ -35,6 +36,7 @@ const SettingsScreen = ({ navigation }) => {
         <MaterialIcons name="list" size={24} color="white" style={styles.icon} />
       </TouchableOpacity>
 
+    
       <TouchableOpacity onPress={handleLogout} style={styles.button}>
         <Text style={styles.buttonText}>Logout</Text>
         <MaterialIcons name="logout" size={24} color="white" style={styles.icon} />
