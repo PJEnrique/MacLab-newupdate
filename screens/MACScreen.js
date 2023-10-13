@@ -6,6 +6,10 @@ const generateUniqueId = () => {
   return '_' + Math.random().toString(36).substring(2, 9);
 };
 
+const generateIdentifier = (index) => {
+  return `MAC ${index}`;
+};
+
 const MACScreen = () => {
   const [desktopMacIcons, setDesktopMacIcons] = useState(
     Array.from({ length: 40 }, (_, index) => ({
@@ -17,27 +21,37 @@ const MACScreen = () => {
   );
 
   const postToMongoDB = async (index) => {
-    const selectedIcon = desktopMacIcons.find((icon) => icon.index === index);
-    try {
-      const response = await fetch('http://192.168.100.14:3600/mac/post', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(selectedIcon),  // Send only the selected icon
-      });
+  const selectedIcon = desktopMacIcons.find((icon) => icon.index === index);
+  try {
+    const identifier = generateIdentifier(selectedIcon.index);
 
-      // Log the response
-      const responseData = await response.json();
-      console.log('Response from server:', responseData);
 
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
-    } catch (error) {
-      console.error('Error posting MAC data:', error.message);
+    const dataToSend = {
+      id: selectedIcon.id,
+      index: selectedIcon.index,
+      active: selectedIcon.active,
+      timer: selectedIcon.timer,
+      identifier: identifier, 
+    };
+
+    const response = await fetch('http://192.168.100.14:3500/mac/post', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dataToSend),
+    });
+
+    const responseData = await response.json();
+    console.log('Response from server:', responseData);
+
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.statusText}`);
     }
-  };
+  } catch (error) {
+    console.error('Error posting MAC data:', error.message);
+  }
+};
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -89,10 +103,10 @@ const MACScreen = () => {
             }}
             style={[
               styles.iconContainer,
-              { borderColor: icon.active ? 'green' : 'white' },
+              { borderColor: icon.active ? 'green' : 'black' },
             ]}
           >
-            <MaterialIcons name="desktop-mac" size={40} color="#ffa500" />
+            <MaterialIcons name="desktop-mac" size={40} color="#f97316" />
             <Text style={styles.text}>{`MAC ${icon.index}`}</Text>
             <View
               style={[
@@ -111,7 +125,7 @@ const MACScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#101820FF',
+    backgroundColor: '#7A2048',
     paddingHorizontal: 20,
   },
   iconContainer: {
@@ -119,7 +133,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     padding: 30,
-    marginBottom: 70,
+    marginBottom: 60,
   },
   statusIndicator: {
     width: 10,

@@ -50,7 +50,7 @@ export default function SignUpScreen() {
     };
 
     return (
-        <View className="flex-1 bg-white" style={{backgroundColor: themeColors.secondary}}>
+        <View className="flex-1 bg-white" style={{backgroundColor: themeColors.maroon}}>
             <SafeAreaView className="flex">
                 <View className="flex-row justify-start">
                 </View>
@@ -61,21 +61,21 @@ export default function SignUpScreen() {
             </SafeAreaView>
             <View style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}}>
                 <View className="form space-y-4">
-                    <Text className="text-orange-400 ml-1">Full Name</Text>
+                    <Text className="text-white ml-1">Full Name:</Text>
                     <TextInput
                         className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-0"
                         value={fullName}
                         onChangeText={value => setName(value)}
                         placeholder='Enter Name'
                     />
-                    <Text className="text-orange-400 ml-1">Email Address</Text>
+                    <Text className="text-white ml-1">Email Address:</Text>
                     <TextInput
                         className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-0"
                         value={email}
                         onChangeText={value => setEmail(value)}
                         placeholder='Enter Email'
                     />
-                    <Text className="text-orange-400 ml-1">Password</Text>
+                    <Text className="text-white ml-1">Password:</Text>
                     <TextInput
                         className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-0"
                         secureTextEntry={isSecureEntry}
@@ -91,7 +91,7 @@ export default function SignUpScreen() {
                     >
                         <Text>{isSecureEntry ? "Show" : "Hide"}</Text>
                     </TouchableOpacity>
-                    <Text className="text-orange-400 ml-1">Confirm Password</Text>
+                    <Text className="text-white ml-1">Confirm Password:</Text>
                     <TextInput
                         className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-0"
                         secureTextEntry={isSecureEntry}
@@ -111,7 +111,7 @@ export default function SignUpScreen() {
                         <Text className="text-red-500 ml-4">Passwords do not match</Text>
                     )}
                     <TouchableOpacity
-                        className="py-3 bg-orange-400 rounded-xl"
+                        className="py-3 bg-orange-500 rounded-xl"
                         onPress={handleSubmit}
                     >
                         <Text className="font-xl font-bold text-center text-gray-700">
@@ -120,7 +120,7 @@ export default function SignUpScreen() {
                     </TouchableOpacity>
                 </View>
                 <View className="flex-row justify-center mt-7">
-                    <Text className="text-orange-400 font-semibold">Already have an account?</Text>
+                    <Text className="text-orange-500 font-semibold">Already have an account?</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                         <Text className="font-bold text-white"> Login</Text>
                     </TouchableOpacity>

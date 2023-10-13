@@ -7,7 +7,7 @@ const Guidelines = () => {
       <View style={styles.guidelineContainer}>
         <Text style={styles.header}>Home</Text>
         <Text style={styles.guidelineText}>
-          Scanner for QR code that will take as your attendance.
+          Scanner for QR code that will take as your access to attendance form.
         </Text>
         <Text style={styles.guidelineText}>
           Functionality: Scan a QR code to record your attendance.
@@ -64,7 +64,7 @@ const Guidelines = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 50,
-    backgroundColor: '#101820FF'
+    backgroundColor: '#7A2048'
   },
   guidelineContainer: {
     marginBottom: 20,
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#e67e22'
+    color: '#f97316'
   },
   guidelineText: {
     fontSize: 16,

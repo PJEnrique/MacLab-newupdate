@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { STORAGE_KEY } from '../storage';
 import axios from 'axios'; 
+
 
 const TypewriterText = ({ text }) => {
   const [displayText, setDisplayText] = useState('');
@@ -26,13 +27,16 @@ const TypewriterText = ({ text }) => {
 };
 
 const HomeScreen = () => {
+  const route = useRoute();
+  const { scanned } = route.params || {};
   const [fullname, setFullname] = useState('');
   const [studentNumber, setStudentNumber] = useState('');
   const [yearLevel, setYearLevel] = useState('');
   const [major, setMajor] = useState('');
   const [entryTime, setEntryTime] = useState(new Date().toLocaleString());
-
   const navigation = useNavigation();
+  
+
 
   const handleFormSubmit = async () => {
   try {
@@ -40,7 +44,7 @@ const HomeScreen = () => {
     console.log('Form data submitted:', formData);
 
     // Send a POST request to your server with the form data
-    const response = await axios.post('http://192.168.100.14:3600/attendance/post1', formData);
+    const response = await axios.post('http://192.168.100.14:3500/attendance/post1', formData);
     console.log('Response from server:', response.data);
 
     // Load existing submission data from AsyncStorage
@@ -62,7 +66,13 @@ const HomeScreen = () => {
     console.error('Error submitting form:', error);
   }
 };
-
+if (!scanned) {
+    return (
+      <View style={styles.container1}>
+        <Text style={styles.title1}>Scan the QR code to access this screen.</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <TypewriterText text="ATTENDANCE" />
@@ -131,15 +141,15 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#101820FF',
+    backgroundColor: '#7A2048',
     justifyContent: 'flex-start', 
     alignItems: 'center',
     padding: 20,
   },
   formContainer: {
     width: '100%',
-    borderColor: 'white',
-    borderWidth: 1,
+    borderColor: '#f97316',
+    borderWidth: 5,
     padding: 10,
     marginTop: 100, 
   },
@@ -152,12 +162,12 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#ccc',
+    borderWidth: 2,
+    borderColor: '#f97316',
     padding: 10,
   },
   submitButton: {
-    backgroundColor: '#ffa500',
+    backgroundColor: '#f97316',
     padding: 15,
     alignItems: 'center',
     borderRadius: 5,
@@ -171,6 +181,17 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     marginBottom: 20,
+  },
+  title1: {
+    fontSize: 50,
+    color: '#f97316',
+    textAlign: 'center',
+  },
+  container1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#7A2048'
   },
 });
 

@@ -19,7 +19,7 @@ const SettingsScreen = ({ navigation }) => {
 
 
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#101820FF' }}>
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#7A2048' }}>
       <TouchableOpacity
         onPress={handleAboutUsNavigation}
         style={{ ...styles.button, marginBottom: 10 }}
@@ -49,7 +49,7 @@ const styles = {
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#e67e22',
+    backgroundColor: '#f97316',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: 'black',

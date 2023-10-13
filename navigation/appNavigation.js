@@ -8,6 +8,7 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import useAuth from '../hooks/useAuth';
 import ForgotPassword from '../screens/ForgotPassword';
+import QRScanner from '../screens/QRScanner';
 import AboutUs from '../screens/AboutUs';
 import Guidelines from '../screens/Guidelines';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -28,8 +29,8 @@ const screenOptions = {
     left: 10,
     elevation: 10,
     height: 60,
-     backgroundColor: '#fff',
-     borderTopLeftRadius: 20,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
@@ -64,7 +65,18 @@ export default function AppNavigation() {
   if (user) {
     return (
       <NavigationContainer>
-        <Tab.Navigator initialRouteName="Home" screenOptions={screenOptions}>
+        <Tab.Navigator initialRouteName="QRScanner" screenOptions={screenOptions}>
+        <Tab.Screen
+            name="QRScanner"
+            component={QRScanner}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                  <FontAwesome name="qrcode" size={30} color={focused ? '#810551' : '#111'} />
+                </View>
+              ),
+            }}
+          />
           <Tab.Screen
             name="Home"
             component={HomeScreen}
@@ -72,7 +84,7 @@ export default function AppNavigation() {
               tabBarIcon: ({ focused }) => {
                 return (
                   <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Entypo name="home" size={30} color={focused ? '#ffa500' : '#111'} />
+                    <Entypo name="home" size={30} color={focused ? '#810551' : '#111'} />
                   </View>
                 );
               },
@@ -85,7 +97,7 @@ export default function AppNavigation() {
               tabBarIcon: ({ focused }) => {
                 return (
                   <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <FontAwesome name="history" size={30} color={focused ? '#ffa500' : '#111'} />
+                    <FontAwesome name="history" size={30} color={focused ? '#810551' : '#111'} />
                   </View>
                 );
               },
@@ -101,7 +113,7 @@ export default function AppNavigation() {
                     <MaterialIcons
                       name="desktop-mac"
                       size={30}
-                      color={focused ? '#ffa500' : '#111'}
+                      color={focused ? '#810551' : '#111'}
                     />
                   </View>
                 );
@@ -115,7 +127,7 @@ export default function AppNavigation() {
               tabBarIcon: ({ focused }) => {
                 return (
                   <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <MaterialIcons name="face" size={30} color={focused ? '#ffa500' : '#111'} />
+                    <MaterialIcons name="face" size={30} color={focused ? '#810551' : '#111'} />
                   </View>
                 );
               },
@@ -131,7 +143,7 @@ export default function AppNavigation() {
           <Stack.Screen name="Welcome" options={{ headerShown: false }} component={WelcomeScreen} />
           <Stack.Screen name="Login" options={{ headerShown: false }} component={LoginScreen} />
           <Stack.Screen name="SignUp" options={{ headerShown: false }} component={SignUpScreen} />
-          <Stack.Screen name="ForgotPassword" options={{ headerShown: false }} component={ForgotPassword}/>
+          <Stack.Screen name="ForgotPassword" options={{ headerShown: false }} component={ForgotPassword} />
         </Stack.Navigator>
       </NavigationContainer>
     );

@@ -4,9 +4,10 @@ const router = express.Router();
 // Create a new MAC
 router.post('/post', async (req, res) => {
   try {
-    const { id, index, active, timer } = req.body;
+    const { id, index, active, timer, identifier } = req.body;
 
-    const requestData = { id, index, active, timer };
+    // Updated requestData to include the identifier
+    const requestData = { id, index, active, timer, identifier };
     const mac = new IMAC(requestData);
 
     await mac.save();
@@ -38,7 +39,7 @@ router.put('/MAC/put/:id', async (req, res) => {
 });
 
 // Delete a MAC
-router.delete('/MAC/delete/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
   try {
     const MAC = await IMAC.findByIdAndRemove(req.params.id);
     res.json(MAC);
@@ -49,13 +50,13 @@ router.delete('/MAC/delete/:id', async (req, res) => {
 });
 
 // Delete All MAC
-router.delete('/MAC/deleteAll', async (req, res) => {
+router.delete('/deleteAll', async (req, res) => {
   try {
-    const MAC = await IMAC.deleteMany(req.params.id);
-    res.json(MAC);MAC
-    console.log("All data are deleted successfully");
+    const result = await IMAC.deleteMany({});
+    res.json({ message: 'All data deleted successfully', deletedCount: result.deletedCount });
+    console.log('All data are deleted successfully');
   } catch (error) {
-    res.status(500).json({error: error.message});
+    res.status(500).json({ error: error.message });
   }
 });
 

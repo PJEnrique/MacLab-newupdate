@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 });
 
 app.use(cors({
-  origin: ['http://192.168.100.14:3600', 'exp://192.168.100.14:19000']
+  origin: ['http://192.168.100.14:3601', 'exp://192.168.100.14:19000', 'http://192.168.100.14:3500', 'http://localhost:3601', 'http://localhost:3600']
 })); // Use CORS middleware
 
 mongoose.connect(process.env.MONGO_URL, {

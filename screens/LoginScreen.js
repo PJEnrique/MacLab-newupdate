@@ -1,10 +1,10 @@
-import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
-import React, { useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { themeColors } from '../theme/ThemeColors'
-import { useNavigation } from '@react-navigation/native'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../config/firebase'
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { themeColors } from '../theme/ThemeColors';
+import { useNavigation } from '@react-navigation/native';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -13,7 +13,7 @@ export default function LoginScreen() {
   const [isSecureEntry, setIsSecureEntry] = useState(true);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
 
-  const handleSubmit = async () => {
+ const handleSubmit = async () => {
     if (email && password && passwordsMatch) {
       try {
         await signInWithEmailAndPassword(auth, email, password);
@@ -34,8 +34,9 @@ export default function LoginScreen() {
     }
   }
 
+
   return (
-    <View className="flex-1 bg-white" style={{ backgroundColor: themeColors.secondary }}>
+    <View className="flex-1 bg-white" style={{ backgroundColor: themeColors.maroon }}>
       <SafeAreaView className="flex ">
         <View className="flex-row justify-start">
         </View>
@@ -47,7 +48,7 @@ export default function LoginScreen() {
       <View style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }} >
         <View className="form space-y-4">
           {/* Email Input */}
-          <Text className="text-orange-400 ml-1">Email Address</Text>
+          <Text className="text-white ml-1">Email Address:</Text>
           <TextInput
             className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
             placeholder="Enter your Email"
@@ -55,7 +56,7 @@ export default function LoginScreen() {
             onChangeText={value => setEmail(value)}
           />
           {/* Password Input */}
-          <Text className="text-orange-400 ml-1">Password</Text>
+          <Text className="text-white ml-1">Password:</Text>
           <TextInput
             className="p-4 bg-gray-100 text-gray-700 rounded-2xl"
             secureTextEntry={isSecureEntry}
@@ -72,11 +73,11 @@ export default function LoginScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity onPress={()=> navigation.navigate('ForgotPassword')} className="flex items-end">
-            <Text className="text-orange-400 mb-5">Forgot Password?</Text>
+            <Text className="text-orange-500 font-bold mb-5">Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity 
             onPress={handleSubmit}
-            className="py-3 bg-orange-400 rounded-xl">
+            className="py-3 bg-orange-500 rounded-xl">
             <Text 
               className="text-xl font-bold text-center text-gray-700"
             >
@@ -85,7 +86,7 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
         <View className="flex-row justify-center mt-7">
-          <Text className="text-orange-400 font-semibold">
+          <Text className="text-orange-500 font-semibold">
             Don't have an account?
           </Text>
           <TouchableOpacity onPress={()=> navigation.navigate('SignUp')}>

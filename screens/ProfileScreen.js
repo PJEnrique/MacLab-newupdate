@@ -203,7 +203,7 @@ const ProfileScreen = () => {
   title="Update"
   onPress={handleProfileUpdate}
   buttonStyle={{
-    backgroundColor: isEditing ? '#ffa500' : '#ffa500',
+    backgroundColor: isEditing ? '#f97316' : '#f97316',
     borderRadius: 10,
     marginTop: 50,
   }}
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    backgroundColor: '#101820FF'
+    backgroundColor: '#7A2048'
   },
   avatarContainer: {
     marginBottom: 20,
@@ -266,11 +266,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   editProfileButton: {
-    color: 'orange',
+    color: '#f97316',
     marginTop: 10,
   },
   pickerButton: {
-    backgroundColor: '#ffa500',
+    backgroundColor: '#f97316',
     padding: 10,
     borderRadius: 5,
     marginTop: 5,

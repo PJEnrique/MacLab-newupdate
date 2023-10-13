@@ -36,7 +36,7 @@ const HistoryScreen = ({ route }) => {
     };
 
     try {
-      const response = await axios.post('http://192.168.100.14:3600/attendance/post1', attendanceData);
+      const response = await axios.post('http://192.168.100.14:3500/attendance/post1', attendanceData);
       console.log('Response from server:', response.data);
 
       // Handle the new form submission and update submissionContainers accordingly
@@ -96,7 +96,7 @@ const HistoryScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#101820FF',
+    backgroundColor: '#7A2048',
   },
   content: {
     flex: 1,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#f97316',
     marginBottom: 10,
   },
   scrollView: {
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#f97316',
     marginBottom: 5,
   },
   cardValue: {

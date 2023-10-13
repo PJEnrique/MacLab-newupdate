@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 export default function WelcomeScreen() {
     const navigation = useNavigation();
   return (
-    <SafeAreaView className="flex-1" style={{backgroundColor: themeColors.secondary}}>
+    <SafeAreaView className="flex-1" style={{backgroundColor: themeColors.maroon}}>
             <View className="flex-row justify-center">
                 <Image source={require("../assets/images/welcome.png")}
                     style={{height: 300,
@@ -24,7 +24,7 @@ export default function WelcomeScreen() {
             </View>
             <View className="flex-1 flex justify-around my-10">
             <Text style={{
-                            color: themeColors.Orange,
+                            color: themeColors.white,
                             fontSize: 42,
                         }}
                 className="font-bold text-4xl text-center">
@@ -44,7 +44,7 @@ export default function WelcomeScreen() {
             <View className="space-y-4">
                 <TouchableOpacity
                     onPress={()=> navigation.navigate('Login')}
-                    className="py-3 bg-orange-400 mx-7 rounded-xl">
+                    className="py-3 bg-orange-500 mx-7 rounded-xl">
                         <Text 
                             className="text-xl font-bold text-center text-gray-700"
                         >
@@ -54,7 +54,7 @@ export default function WelcomeScreen() {
                 <View className="flex-row justify-center">
                     <Text style={{
                             color: themeColors.Orange,
-                        }} className="text-black font-semibold">Already have an account?</Text>
+                        }} className="text-orange-500 font-semibold">Already have an account?</Text>
                     <TouchableOpacity onPress={()=> navigation.navigate('SignUp')}>
                         <Text className="font-bold text-white"> SignUp</Text>
                     </TouchableOpacity>
