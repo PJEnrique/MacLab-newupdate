@@ -36,7 +36,7 @@ const HistoryScreen = ({ route }) => {
     };
 
     try {
-      const response = await axios.post('http://192.168.116.181:3500/attendance/post1', attendanceData);
+      const response = await axios.post('http://192.168.100.36:3500/attendance/post1', attendanceData);
       console.log('Response from server:', response.data);
 
       
@@ -96,7 +96,7 @@ const HistoryScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7A2048',
+    backgroundColor: '#101820FF',
   },
   content: {
     flex: 1,
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   cardContainer: {
-    backgroundColor: '#17202A',
+    backgroundColor: 'gray',
     borderRadius: 10,
     marginBottom: 12,
     padding: 16,

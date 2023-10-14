@@ -72,7 +72,7 @@ export default function AppNavigation() {
             options={{
               tabBarIcon: ({ focused }) => (
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                  <FontAwesome name="qrcode" size={30} color={focused ? '#810551' : '#111'} />
+                  <FontAwesome name="qrcode" size={30} color={focused ? '#f97316' : '#111'} />
                 </View>
               ),
             }}
@@ -84,7 +84,7 @@ export default function AppNavigation() {
               tabBarIcon: ({ focused }) => {
                 return (
                   <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Entypo name="home" size={30} color={focused ? '#810551' : '#111'} />
+                    <Entypo name="home" size={30} color={focused ? '#f97316' : '#111'} />
                   </View>
                 );
               },
@@ -97,7 +97,7 @@ export default function AppNavigation() {
               tabBarIcon: ({ focused }) => {
                 return (
                   <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <FontAwesome name="history" size={30} color={focused ? '#810551' : '#111'} />
+                    <FontAwesome name="history" size={30} color={focused ? '#f97316' : '#111'} />
                   </View>
                 );
               },
@@ -113,7 +113,7 @@ export default function AppNavigation() {
                     <MaterialIcons
                       name="desktop-mac"
                       size={30}
-                      color={focused ? '#810551' : '#111'}
+                      color={focused ? '#f97316' : '#111'}
                     />
                   </View>
                 );
@@ -127,7 +127,7 @@ export default function AppNavigation() {
               tabBarIcon: ({ focused }) => {
                 return (
                   <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <MaterialIcons name="face" size={30} color={focused ? '#810551' : '#111'} />
+                    <MaterialIcons name="face" size={30} color={focused ? '#f97316' : '#111'} />
                   </View>
                 );
               },

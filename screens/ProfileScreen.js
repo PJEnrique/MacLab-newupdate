@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    backgroundColor: '#7A2048'
+    backgroundColor: '#101820FF'
   },
   avatarContainer: {
     marginBottom: 20,

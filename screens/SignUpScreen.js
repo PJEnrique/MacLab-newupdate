@@ -50,7 +50,7 @@ export default function SignUpScreen() {
     };
 
     return (
-        <View className="flex-1 bg-white" style={{backgroundColor: themeColors.maroon}}>
+        <View className="flex-1 bg-white" style={{backgroundColor: themeColors.secondary}}>
             <SafeAreaView className="flex">
                 <View className="flex-row justify-start">
                 </View>

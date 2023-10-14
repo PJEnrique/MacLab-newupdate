@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 export default function WelcomeScreen() {
     const navigation = useNavigation();
   return (
-    <SafeAreaView className="flex-1" style={{backgroundColor: themeColors.maroon}}>
+    <SafeAreaView className="flex-1" style={{backgroundColor: themeColors.secondary}}>
             <View className="flex-row justify-center">
                 <Image source={require("../assets/images/logo1.jpg")}
                     style={{height: 300,

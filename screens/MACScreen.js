@@ -78,7 +78,7 @@ const MACScreen = () => {
         studentNumber: securityInfo.studentNumber,
       };
   
-      const response = await fetch('http://192.168.116.181:3500/mac/post', {
+      const response = await fetch('http://192.168.100.36:3500/mac/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -173,7 +173,7 @@ const MACScreen = () => {
               }}
               style={[
                 styles.iconContainer,
-                { borderColor: icon.active ? 'green' : 'black' },
+                { borderColor: icon.active ? 'green' : 'white' },
               ]}
             >
               <MaterialIcons name="desktop-mac" size={40} color="#f97316" />
@@ -216,7 +216,7 @@ const MACScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7A2048',
+    backgroundColor: '#101820FF',
     paddingHorizontal: 20,
   },
   iconContainer: {
@@ -253,8 +253,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
     padding: 10,
-    color: 'white',
+    color: 'black',
     width: '100%',
+    backgroundColor: 'white',
   },
   accessButton: {
     backgroundColor: '#f97316',

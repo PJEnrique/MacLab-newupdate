@@ -51,7 +51,7 @@ const QRScanner = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#7A2048',
+    backgroundColor: '#101820FF',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-end',
