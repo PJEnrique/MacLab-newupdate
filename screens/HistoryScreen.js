@@ -36,10 +36,10 @@ const HistoryScreen = ({ route }) => {
     };
 
     try {
-      const response = await axios.post('http://192.168.100.14:3500/attendance/post1', attendanceData);
+      const response = await axios.post('http://192.168.116.181:3500/attendance/post1', attendanceData);
       console.log('Response from server:', response.data);
 
-      // Handle the new form submission and update submissionContainers accordingly
+      
       const updatedSubmissionContainers = [
         ...submissionContainers,
         {
@@ -48,10 +48,10 @@ const HistoryScreen = ({ route }) => {
         },
       ];
 
-      // Save the updated data to AsyncStorage
+      
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSubmissionContainers));
 
-      // Update the submissionContainers state to trigger a refresh
+      
       setSubmissionContainers(updatedSubmissionContainers);
     } catch (error) {
       console.error('Error posting attendance data:', error.response ? error.response.data : error.message);

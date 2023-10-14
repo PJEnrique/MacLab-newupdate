@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
-const cors = require('cors'); // Import the cors package
+const cors = require('cors'); 
 const mongoose = require('mongoose');
 const MAC = require('./routes/MAC');
 const AttendanceRoute = require('./routes/AttendanceRoute');
@@ -15,8 +15,8 @@ app.use((req, res, next) => {
 });
 
 app.use(cors({
-  origin: ['http://192.168.100.14:3601', 'exp://192.168.100.14:19000', 'http://192.168.100.14:3500', 'http://localhost:3601', 'http://localhost:3600']
-})); // Use CORS middleware
+  origin: ['http://192.168.116.181:3900', 'exp://192.168.116.181:19000', 'http://192.168.116.181:3500', 'http://localhost:3900', 'http://localhost:3900']
+})); 
 
 mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,

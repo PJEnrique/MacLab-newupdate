@@ -9,7 +9,7 @@ export default function WelcomeScreen() {
   return (
     <SafeAreaView className="flex-1" style={{backgroundColor: themeColors.maroon}}>
             <View className="flex-row justify-center">
-                <Image source={require("../assets/images/welcome.png")}
+                <Image source={require("../assets/images/logo1.jpg")}
                     style={{height: 300,
                             width: 300,
                             borderRadius: 20,

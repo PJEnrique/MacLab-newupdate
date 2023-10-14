@@ -47,7 +47,7 @@ export default function LoginScreen() {
       </SafeAreaView>
       <View style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }} >
         <View className="form space-y-4">
-          {/* Email Input */}
+         
           <Text className="text-white ml-1">Email Address:</Text>
           <TextInput
             className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
@@ -55,7 +55,7 @@ export default function LoginScreen() {
             value={email}
             onChangeText={value => setEmail(value)}
           />
-          {/* Password Input */}
+   
           <Text className="text-white ml-1">Password:</Text>
           <TextInput
             className="p-4 bg-gray-100 text-gray-700 rounded-2xl"

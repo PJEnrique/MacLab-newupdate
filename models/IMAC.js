@@ -16,6 +16,20 @@ const IMACSchema = new mongoose.Schema({
   identifier: {
     type: String,
     required: true
+  },
+  activationDateTime: {
+    type: String, 
+  },
+  deactivationDateTime: {
+    type: String,  
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  studentNumber: {
+    type: String,
+    required: true
   }
 });
 

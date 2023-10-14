@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const generateUniqueId = () => {
@@ -20,38 +20,82 @@ const MACScreen = () => {
     }))
   );
 
+  const [securityInfo, setSecurityInfo] = useState({
+    name: '',
+    studentNumber: '',
+  });
+
+  const [accessGranted, setAccessGranted] = useState(false);
+
   const postToMongoDB = async (index) => {
-  const selectedIcon = desktopMacIcons.find((icon) => icon.index === index);
-  try {
-    const identifier = generateIdentifier(selectedIcon.index);
-
-
-    const dataToSend = {
-      id: selectedIcon.id,
-      index: selectedIcon.index,
-      active: selectedIcon.active,
-      timer: selectedIcon.timer,
-      identifier: identifier, 
-    };
-
-    const response = await fetch('http://192.168.100.14:3500/mac/post', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(dataToSend),
-    });
-
-    const responseData = await response.json();
-    console.log('Response from server:', responseData);
-
-    if (!response.ok) {
-      throw new Error(`Network response was not ok: ${response.statusText}`);
+    const selectedIcon = desktopMacIcons.find((icon) => icon.index === index);
+    try {
+      const identifier = generateIdentifier(selectedIcon.index);
+  
+      const formatDate = (dateTime) => {
+        const options = {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        };
+        return dateTime.toLocaleDateString('en-PH', options);
+      };
+  
+      const formatTime = (dateTime) => {
+        const options = {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true,
+        };
+        return dateTime.toLocaleTimeString('en-US', options);
+      };
+  
+      const activationDate = selectedIcon.activationDateTime
+        ? `DATE: ${formatDate(selectedIcon.activationDateTime)}`
+        : null;
+  
+      const activationTime = selectedIcon.activationDateTime
+        ? `TIME: ${formatTime(selectedIcon.activationDateTime)}`
+        : null;
+  
+      const deactivationDate = selectedIcon.deactivationDateTime
+        ? `DATE: ${formatDate(selectedIcon.deactivationDateTime)}`
+        : null;
+  
+      const deactivationTime = selectedIcon.deactivationDateTime
+        ? `TIME: ${formatTime(selectedIcon.deactivationDateTime)}`
+        : null;
+  
+      const dataToSend = {
+        id: selectedIcon.id,
+        index: selectedIcon.index,
+        active: selectedIcon.active,
+        timer: selectedIcon.timer,
+        identifier: identifier,
+        activationDateTime: `${activationDate} ${activationTime}`,
+        deactivationDateTime: `${deactivationDate} ${deactivationTime}`,
+        name: securityInfo.name,
+        studentNumber: securityInfo.studentNumber,
+      };
+  
+      const response = await fetch('http://192.168.116.181:3500/mac/post', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend),
+      });
+  
+      const responseData = await response.json();
+      console.log('Response from server:', responseData);
+  
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Error posting MAC data:', error.message);
     }
-  } catch (error) {
-    console.error('Error posting MAC data:', error.message);
-  }
-};
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -59,7 +103,7 @@ const MACScreen = () => {
         prevIcons.map((icon) => {
           const updatedIcon = icon.active && icon.timer > 0 ? { ...icon, timer: icon.timer - 1 } : icon;
 
-          // Post to MongoDB if the timer has stopped
+         
           if (!updatedIcon.active && updatedIcon.timer <= 0) {
             postToMongoDB(updatedIcon.index);
           }
@@ -74,6 +118,12 @@ const MACScreen = () => {
     };
   }, []);
 
+  const handleAccess = () => {
+    if (securityInfo.name.trim() !== '' && securityInfo.studentNumber.trim() !== '') {
+      setAccessGranted(true);
+    }
+  };
+
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -82,42 +132,83 @@ const MACScreen = () => {
   };
 
   const toggleStatus = (index) => {
-    const updatedIcons = desktopMacIcons.map((icon) =>
-      icon.index === index ? { ...icon, active: !icon.active, timer: icon.active ? 7200 : 7200 } : icon
-    );
-
+    const updatedIcons = desktopMacIcons.map((icon) => {
+      if (icon.index === index) {
+        const updatedIcon = {
+          ...icon,
+          active: !icon.active,
+          timer: icon.active ? 7200 : 7200
+        };
+  
+        
+        if (updatedIcon.active) {
+          updatedIcon.activationDateTime = new Date();
+          updatedIcon.deactivationDateTime = null;
+        } else {
+          updatedIcon.deactivationDateTime = new Date();
+          updatedIcon.activationDateTime = null;
+        }
+  
+        return updatedIcon;
+      } else {
+        return icon;
+      }
+    });
+  
     setDesktopMacIcons(updatedIcons);
   };
-
+  
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={{ flexDirection: 'column' }}>
-        {desktopMacIcons.map((icon) => (
-          <TouchableOpacity
-            key={`${icon.index}_${icon.id}`}
-            onPress={() => {
-              toggleStatus(icon.index);
-              if (icon.active) {
-                postToMongoDB(icon.index);
-              }
-            }}
-            style={[
-              styles.iconContainer,
-              { borderColor: icon.active ? 'green' : 'black' },
-            ]}
-          >
-            <MaterialIcons name="desktop-mac" size={40} color="#f97316" />
-            <Text style={styles.text}>{`MAC ${icon.index}`}</Text>
-            <View
+      {accessGranted ? (
+        <ScrollView contentContainerStyle={{ flexDirection: 'column' }}>
+          {desktopMacIcons.map((icon) => (
+            <TouchableOpacity
+              key={`${icon.index}_${icon.id}`}
+              onPress={() => {
+                toggleStatus(icon.index);
+                if (icon.active) {
+                  postToMongoDB(icon.index);
+                }
+              }}
               style={[
-                styles.statusIndicator,
-                { backgroundColor: icon.active ? 'green' : 'red' },
+                styles.iconContainer,
+                { borderColor: icon.active ? 'green' : 'black' },
               ]}
-            ></View>
-            <Text style={styles.text}>{formatTime(icon.timer)}</Text>
+            >
+              <MaterialIcons name="desktop-mac" size={40} color="#f97316" />
+              <Text style={styles.text}>{`MAC ${icon.index}`}</Text>
+              <View
+                style={[
+                  styles.statusIndicator,
+                  { backgroundColor: icon.active ? 'green' : 'red' },
+                ]}
+              ></View>
+              <Text style={styles.text}>{formatTime(icon.timer)}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      ) : (
+        <View style={styles.securityAccessContainer}>
+          <Text style={styles.label}>Name:</Text>
+          <TextInput
+            style={styles.input}
+            value={securityInfo.name}
+            onChangeText={(text) => setSecurityInfo({ ...securityInfo, name: text })}
+            placeholder="Enter your name"
+          />
+          <Text style={styles.label}>Student Number:</Text>
+          <TextInput
+            style={styles.input}
+            value={securityInfo.studentNumber}
+            onChangeText={(text) => setSecurityInfo({ ...securityInfo, studentNumber: text })}
+            placeholder="Enter your student number"
+          />
+          <TouchableOpacity style={styles.accessButton} onPress={handleAccess}>
+            <Text style={styles.accessButtonText}>Access MACScreen</Text>
           </TouchableOpacity>
-        ))}
-      </ScrollView>
+        </View>
+      )}
     </View>
   );
 };
@@ -144,6 +235,36 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 20,
+  },
+  securityAccessContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  label: {
+    fontSize: 18,
+    marginBottom: 5,
+    color: 'white',
+  },
+  input: {
+    height: 40,
+    borderColor: '#f97316',
+    borderWidth: 1,
+    marginBottom: 20,
+    padding: 10,
+    color: 'white',
+    width: '100%',
+  },
+  accessButton: {
+    backgroundColor: '#f97316',
+    paddingVertical: 15,
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  accessButtonText: {
+    color: 'white',
+    fontSize: 18,
   },
 });
 

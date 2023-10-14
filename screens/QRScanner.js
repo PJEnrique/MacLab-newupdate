@@ -67,10 +67,10 @@ const styles = StyleSheet.create({
     height: 200,
   },
   border: {
-    width: 220, // Adjust the width and height to match the QR code size
+    width: 220, 
     height: 220,
-    borderColor: 'orange', // Set the border color
-    borderWidth: 2, // Set the border width
+    borderColor: 'orange', 
+    borderWidth: 2, 
     position: 'absolute',
   },
 });

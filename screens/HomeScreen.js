@@ -19,7 +19,7 @@ const TypewriterText = ({ text }) => {
       } else {
         clearInterval(intervalId);
       }
-    }, 100); // Adjust the delay between characters here (in milliseconds)
+    }, 100); 
     return () => clearInterval(intervalId);
   }, [charIndex, text]);
 
@@ -43,25 +43,25 @@ const HomeScreen = () => {
     const formData = { fullname, studentNumber, yearLevel, major, entryTime };
     console.log('Form data submitted:', formData);
 
-    // Send a POST request to your server with the form data
-    const response = await axios.post('http://192.168.100.14:3500/attendance/post1', formData);
+
+    const response = await axios.post('http://192.168.116.181:3500/attendance/post1', formData);
     console.log('Response from server:', response.data);
 
-    // Load existing submission data from AsyncStorage
+
     const storedData = await AsyncStorage.getItem(STORAGE_KEY);
     const existingData = storedData ? JSON.parse(storedData) : [];
 
-    // Update submission data with new form data
+   
     const updatedData = [...existingData, { id: new Date().toISOString(), formData }];
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedData));
 
     navigation.navigate('History');
-    // Reset the input fields after successful submission
+   
     setFullname('');
     setStudentNumber('');
     setYearLevel('');
     setMajor('');
-    setEntryTime(new Date().toLocaleString()); // Update entryTime for the next submission
+    setEntryTime(new Date().toLocaleString()); 
   } catch (error) {
     console.error('Error submitting form:', error);
   }

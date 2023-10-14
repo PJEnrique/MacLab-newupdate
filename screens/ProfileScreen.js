@@ -198,15 +198,15 @@ const ProfileScreen = () => {
         </TouchableOpacity>
       )}
 
-      {isEditing && (
-        <Button
-  title="Update"
-  onPress={handleProfileUpdate}
-  buttonStyle={{
-    backgroundColor: isEditing ? '#f97316' : '#f97316',
-    borderRadius: 10,
-    marginTop: 50,
-  }}
+        {isEditing && (
+          <Button
+    title="Update"
+    onPress={handleProfileUpdate}
+    buttonStyle={{
+      backgroundColor: isEditing ? '#f97316' : '#f97316',
+      borderRadius: 10,
+      marginTop: 50,
+    }}
 />
       )}
 

@@ -4,10 +4,9 @@ const router = express.Router();
 // Create a new MAC
 router.post('/post', async (req, res) => {
   try {
-    const { id, index, active, timer, identifier } = req.body;
+    const { id, index, active, timer, identifier, activationDateTime, name, studentNumber } = req.body;
 
-    // Updated requestData to include the identifier
-    const requestData = { id, index, active, timer, identifier };
+    const requestData = { id, index, active, timer, identifier, activationDateTime, name, studentNumber };
     const mac = new IMAC(requestData);
 
     await mac.save();

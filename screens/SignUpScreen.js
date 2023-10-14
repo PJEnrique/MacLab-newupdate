@@ -34,7 +34,7 @@ export default function SignUpScreen() {
                 console.log('got error: ', err.message);    
             }
         } else {
-            // Check for empty fields and password matching
+            
             if (!fullName) {
                 alert('Please enter your Full Name');
             } else if (!email) {
