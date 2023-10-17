@@ -36,7 +36,7 @@ const HistoryScreen = ({ route }) => {
     };
 
     try {
-      const response = await axios.post('http://192.168.100.36:3500/attendance/post1', attendanceData);
+      const response = await axios.post('http://192.168.116.181:3500/attendance/post1', attendanceData);
       console.log('Response from server:', response.data);
 
       

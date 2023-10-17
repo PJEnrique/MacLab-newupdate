@@ -44,7 +44,7 @@ const HomeScreen = () => {
     console.log('Form data submitted:', formData);
 
 
-    const response = await axios.post('http://192.168.100.36:3500/attendance/post1', formData);
+    const response = await axios.post('http://192.168.116.181:3500/attendance/post1', formData);
     console.log('Response from server:', response.data);
 
 

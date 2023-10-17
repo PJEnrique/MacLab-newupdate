@@ -78,7 +78,7 @@ const MACScreen = () => {
         studentNumber: securityInfo.studentNumber,
       };
   
-      const response = await fetch('http://192.168.100.36:3500/mac/post', {
+      const response = await fetch('http://192.168.116.181:3500/mac/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
